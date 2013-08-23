@@ -1,4 +1,5 @@
-code_hdu
-========
+##code_hdu
 
-solutions to hduoj
+solutions to some problems on hduoj
+
+[link](http://acm.hdu.edu.cn/listproblem.php?vol=1)
