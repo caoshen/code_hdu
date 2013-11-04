@@ -1,5 +1,6 @@
 /* #1044
-bfs Çó×î¶ÌÂ· + dfs  
+bfs ??????Â· + dfs
+çœ‹æ¸…æ¥šè¾“å…¥ä¸è¾“å‡ºï¼ï¼ 
 */
 #include <iostream>
 #include <cstring>
@@ -10,7 +11,7 @@ const int MAXN =  55;
 char map[MAXN][MAXN];
 int t[MAXN][MAXN];
 int vis1[MAXN][MAXN], vis2[MAXN];
-int val[30];
+int val[MAXN];
 int dx[4] = {0, 0, 1, -1};
 int dy[4] = {1, -1, 0, 0};
 
@@ -19,7 +20,7 @@ int sum, ans;
 
 struct P {
 	int x, y, step;
-} q[3000];
+} q[5000];
 
 void bfs(int x, int y, int s) {
 	P p0, p1;
@@ -52,26 +53,26 @@ void bfs(int x, int y, int s) {
 	 }
 }
 
-// x : µ±Ç°ÕÒµ½µÄ¶«Î÷£¬ ¿ªÊ¼ÊÇ Èë¿Ú @, ×´Ì¬0
-// y : ¼ÛÖµ
-// time: Ê±¼ä
- 
+// x : ????????????? ????? ???? @, ??0
+// y : ???
+// time: ???
+
 void dfs( int x , int y, int time) {
-	//µ½´ïÊ±¼äÏŞÖÆ »òÕß ¶«Î÷ÒÑ¾­¼ñÍê 
+	//??????????? ???? ???????????
 	if ( time > l || ans == sum)
 		return;
-	// µ½´ï³ö¿Ú 
-	if ( x == w + 1) {
-		ans = ans < y ? y : ans; 
+	// ????????
+	if ( x == w + 1 && y > ans) {
+		ans = y;
 	}
-	// ÕÒ¶«Î÷
+	// ?????
 	for (int i = 1; i <= w + 1; i++) {
-		// Èç¹ûµÚi¸ö¶«Î÷Ã»ÓĞ·ÃÎÊ¹ı¶øÇÒÍ¼ÖĞ´æÔÚ 
+		// ??????i????????Ğ·??????????Ğ´???
 		if (!vis2[i] && t[x][i]) {
 			vis2[i] = 1;
 			dfs(i, y + val[i], time + t[x][i]);
-			vis2[i] = 0; 
-		}  
+			vis2[i] = 0;
+		}
 	}
 }
 
@@ -82,7 +83,7 @@ int main() {
 	while (T--) {
 		x++;
 		ans = -1, sum = 0;
-		cin >> m >> n >> l >> w;
+		cin >> n >> m >> l >> w; // ! å…ˆ W å H 
 		for (int i = 1; i <= w; i++) {
 			cin >> val[i];
 			sum += val[i];
@@ -92,12 +93,11 @@ int main() {
 			for (int j = 0; j < n; j++) {
 				cin >> map[i][j];
 			}
-		// ³õÊ¼»¯·ÃÎÊ±êÖ¾Óë×î¶ÌÂ· 
-		memset(vis1, 0, sizeof(vis1));
+		// ?????????????????Â·
 		memset(vis2, 0, sizeof(vis2));
 		memset(t, 0, sizeof(t));
-		
-		// ¹¹Ôì×î¶ÌÂ·
+
+		// ????????Â·
 		for (int i = 0; i < m; i++)
 			for (int j = 0; j < n; j++) {
 				memset(vis1, 0, sizeof(vis1));
@@ -110,16 +110,17 @@ int main() {
 				}
 				if (map[i][j] >= 'A' && map[i][j] <= 'Z' ) {
 					bfs(i, j, map[i][j] - 'A' + 1);
-				} 
+				}
 		}
 		vis2[0] = 1;
 		dfs (0, 0, 0);
-		if  (ans >= 0) 
-			printf ("Case #%d:\nThe best score is %d\n", x, ans); 
+		if  (ans >= 0)
+			printf ("Case %d:\nThe best score is %d.\n", x, ans);
 		else
-			printf ("Impossible");
+			printf ("Case %d:\nImpossible\n", x);
 		if (T)
 			cout << endl;
 	}
 	return 0;
 }
+
