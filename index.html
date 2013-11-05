@@ -95,6 +95,17 @@
 <p>当然实际的程序要考虑到左子树或右子树为空的情况，来决定是否打上括号。并且递归的退出条件要适当斟酌。</p>
 
 <p>具体请参看代码。</p>
+
+<h3>
+<a name="problem-1102" class="anchor" href="#problem-1102"><span class="octicon octicon-link"></span></a>Problem 1102</h3>
+
+<p>kruskal算法求最小生成树
+查询与合并使用并查集</p>
+
+<div class="highlight highlight-c++"><pre><span class="kt">int</span> <span class="nf">find</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="n">x</span> <span class="o">?</span> <span class="n">x</span> <span class="o">:</span> <span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/caoshen">caoshen</a></p>
