@@ -152,7 +152,20 @@
 <p>当有两名不同门派的弟子进入同一个格子时，一定会发生一次战斗，而且也只有在这种情况下，才会发生战斗。（同派弟子之间当然不会自相残杀；一个格子里三派弟子都有时，大家都会因为害怕别人渔翁得利而不敢出手；而多名同门派弟子也不会联手对付敌人，因为这有悖于武林中崇尚的单打独斗精神，会被人耻笑）</p>
 </blockquote>
 
-<hr>
+<hr><h3>
+<a name="problem-1109" class="anchor" href="#problem-1109"><span class="octicon octicon-link"></span></a>Problem 1109</h3>
+
+<p>使用模拟退火搜索最优解</p>
+
+<ol>
+<li>初始化：初始温度T(充分大)，初始解状态S(是算法迭代的起点)，每个T值的迭代次数L</li>
+<li>对k=1，……，L做第(3)至第(6)步：</li>
+<li>产生新解S′</li>
+<li>计算增量Δt′=C(S′)-C(S)，其中C(S)为评价函数</li>
+<li>若Δt′&lt;0则接受S′作为新的当前解，否则以概率exp(-Δt′/T)接受S′作为新的当前解.</li>
+<li>如果满足终止条件则输出当前解作为最优解，结束程序。终止条件通常取为连续若干个新解都没有被接受时终止算法。</li>
+<li>T逐渐减少，且T-&gt;0，然后转第2步。</li>
+</ol><hr>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/caoshen">caoshen</a></p>
