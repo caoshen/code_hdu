@@ -4,29 +4,40 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>code_hdu by caoshen</title>
-
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
   <body>
-    <div class="wrapper">
+
       <header>
         <h1>code_hdu</h1>
         <p>知行合一</p>
-
-        <p class="view"><a href="https://github.com/caoshen/code_hdu">View the Project on GitHub <small>caoshen/code_hdu</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/caoshen/code_hdu/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/caoshen/code_hdu/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/caoshen/code_hdu">View On <strong>GitHub</strong></a></li>
-        </ul>
       </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/caoshen/code_hdu" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/caoshen/code_hdu/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/caoshen/code_hdu/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
       <section>
         <h1>
 <a name="problem-1100" class="anchor" href="#problem-1100"><span class="octicon octicon-link"></span></a>Problem 1100</h1>
@@ -104,13 +115,22 @@
 <a name="problem-1556" class="anchor" href="#problem-1556"><span class="octicon octicon-link"></span></a>Problem 1556</h1>
 
 <p><a href="http://dongxicheng.org/structure/binary_indexed_tree/">树状数组</a></p>
+
+<h1>
+<a name="problem-1207" class="anchor" href="#problem-1207"><span class="octicon octicon-link"></span></a>Problem 1207</h1>
+
+<div class="highlight highlight-cpp"><pre><span class="c1">//四柱汉诺塔 Frame算法：</span>
+<span class="n">f</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">f</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="n">r</span><span class="p">]</span> <span class="o">+</span> <span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">// r = 1..n-1</span>
+</pre></div>
+
+<p><a href="http://www.cnblogs.com/fanzhidongyzby/archive/2012/07/28/2613173.html">多柱汉诺塔</a></p>
       </section>
       <footer>
-        <p>This project is maintained by <a href="https://github.com/caoshen">caoshen</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        <p>Project maintained by <a href="https://github.com/caoshen">caoshen</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
 </html>
