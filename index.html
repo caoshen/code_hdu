@@ -177,6 +177,15 @@
     <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">)</span><span class="c1">//如果是一个根节点，那么集合数加一</span>
         <span class="o">++</span><span class="n">ans</span><span class="p">;</span>
 </pre></div>
+
+<h1>
+<a name="problem-1214" class="anchor" href="#problem-1214"><span class="octicon octicon-link"></span></a>Problem 1214</h1>
+
+<div class="highlight highlight-cpp"><pre><span class="c1">//一个环123...n，每次两两交换，要几次才能变成n...321</span>
+<span class="c1">//分成两半交换</span>
+<span class="c1">//n = 2k: a[n] = sum(1..k-1) * 2 = k(k-1)</span>
+<span class="c1">//n = 2k - 1: a[n] = sum(1..k-1) + sum(1..k - 2) = (k-1)^2</span>
+</pre></div>
       </section>
       <footer>
         <p>Project maintained by <a href="https://github.com/caoshen">caoshen</a></p>
