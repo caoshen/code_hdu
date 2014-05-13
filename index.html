@@ -193,6 +193,17 @@
 <p>平面上有n个点，每两个点都相连，从一个点出发经过所有的点后回到这个点，而且没有重复的路径，问有几种走法？  </p>
 
 <p>每个点有n-1个点相邻，因为从一半的路径出发，从另一半返回，所以最多有(n - 1) / 2总走法。</p>
+
+<h1>
+<a name="problem-1290" class="anchor" href="#problem-1290"><span class="octicon octicon-link"></span></a>Problem 1290</h1>
+
+<p>求n个平面最多能划分几个空间（切球）</p>
+
+<p>假设能划分f(n)个空间，n条线能划分g(n）个区域：
+一个面最多与其他n-1个面形成n-1条交线，这些交线最多能把平面切成g(n-1)个区域，从而多出g(n-1)个空间
+所以f(n) = f(n - 1) + g(n-1)，而g(n) = g(n - 1) + n，推出f(n) = (n ^ 3 + 5 * n) / 6 + 1</p>
+
+<p><a href="http://blog.csdn.net/yangyafeiac/article/details/7828399">划分问题</a></p>
       </section>
       <footer>
         <p>Project maintained by <a href="https://github.com/caoshen">caoshen</a></p>
