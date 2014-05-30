@@ -87,7 +87,10 @@
 
 <p>由于新的N可以很大，所以我们每一步都要取%，而且最后要mod k，正常来说每步都%k就行了，但是由于其中的一个操作是N%m,所以我们每一步就不能%k了（%k%m混用会导致%出来的答案错误），而要%(k *m);</p>
 
-<p>思路： 用BFS（广度优先搜索），找到的第一个解一定是离根最近的，缺点是空间开销大。每一步的状态是<code>n mod k ((n % k + k) %k)</code></p>
+<p>思路： 用BFS（广度优先搜索），找到的第一个解一定是离根最近的，缺点是空间开销大。每一步的状态是</p>
+
+<pre><code>n mod k ((n % k + k) %k)
+</code></pre>
 
 <h1>
 <a name="problem-1107" class="anchor" href="#problem-1107"><span class="octicon octicon-link"></span></a>Problem 1107</h1>
@@ -210,8 +213,29 @@
 
 <p>最大子序列和</p>
 
-<p>从左到右遍历，要么继续一段序列，要么开始一段新序列。假设f是前一序列，那么 <code>f = max(f + a[i], a[i])</code>。<br>
-如果 f 大于最大值，更新最大值和序列尾。 <code>ans = max(ans, f)</code> 最后求出序列开始的地方。</p>
+<p>从左到右遍历，要么继续一段序列，要么开始一段新序列。假设f是前一序列，那么 </p>
+
+<pre><code>f = max(f + a[i], a[i])
+</code></pre>
+
+<p>如果 f 大于最大值，更新最大值和序列尾。 </p>
+
+<pre><code>ans = max(ans, f)
+</code></pre>
+
+<p>最后求出序列开始的地方。</p>
+
+<h1>
+<a name="problem-1292" class="anchor" href="#problem-1292"><span class="octicon octicon-link"></span></a>Problem 1292</h1>
+
+<p>把一群人分成若干队，有几种分法？</p>
+
+<p>动态规划，i个人分成j队有两种可能：<br>
+1. i-1个人分成j-1队，第i个人自己成为一队；<br>
+2. i-1个人分成j队，第i个人分到其中一队。  </p>
+
+<pre><code>a[i][j] = a[i - 1][j - 1] + a[i - 1][j] * j
+</code></pre>
       </section>
       <footer>
         <p>Project maintained by <a href="https://github.com/caoshen">caoshen</a></p>
