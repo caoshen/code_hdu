@@ -243,6 +243,14 @@
 
 <pre><code>a[i][j] = a[i - 1][j - 1] + a[i - 1][j] * j
 </code></pre>
+
+<h1>
+<a name="problem-1293" class="anchor" href="#problem-1293"><span class="octicon octicon-link"></span></a>Problem 1293</h1>
+
+<p>每一步只能向上、左、右移动，如果最后一次是左或者右，下一步只有两种移动方法，如果最后一次是上，下一步有三种移动方法。</p>
+
+<div class="highlight highlight-cpp"><pre><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span> <span class="c1">//最后一次向上的数目为a[i - 2]</span>
+</pre></div>
       </section>
 
       <footer>
