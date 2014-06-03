@@ -271,7 +271,11 @@
 <pre><code>F(n)=F(n-1)+F(n-2)+F(n-4)
 </code></pre>
 
-<p><a href="http://blog.csdn.net/mullerwch/article/details/14623279">详解</a></p>
+<ol>
+<li>最后一个是M ，有F(n-1)种</li>
+<li>最后一个是F ，根据题目意思，倒数第二个只能是F ，如果前n-2种是有效序列，有F(n-2)种</li>
+<li>最后两个是FF ，但是前n-2种是无效序列，只有F(n-4) M F 这一种情况</li>
+</ol>
       </section>
 
       <footer>
