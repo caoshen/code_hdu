@@ -275,7 +275,14 @@
 <li>最后一个是M ，有F(n-1)种</li>
 <li>最后一个是F ，根据题目意思，倒数第二个只能是F ，如果前n-2种是有效序列，有F(n-2)种</li>
 <li>最后两个是FF ，但是前n-2种是无效序列，只有F(n-4) M F 这一种情况</li>
-</ol>
+</ol><h1>
+<a name="problem-1294" class="anchor" href="#problem-1294"><span class="octicon octicon-link"></span></a>Problem 1294</h1>
+
+<p>重复组合</p>
+
+<blockquote>
+<p>可以把该过程看作是一个“放球模型”；n个不同的元素看作是n个格子，去掉头尾之后中间一共有（n-1）块相同的隔板；用m个相同的小球代表取m次；则原问题可以简化为将m个不加区别的小球放进n个格子里面，问有多少种放法；注意到格子的头尾两块隔板无论什么情况下位置都是不变的，故去掉不用考虑。共有C(m + n - 1, m)种。</p>
+</blockquote>
       </section>
 
       <footer>
