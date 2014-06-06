@@ -286,6 +286,12 @@
 <blockquote>
 <p>可以把该过程看作是一个“放球模型”；n个不同的元素看作是n个格子，去掉头尾之后中间一共有（n-1）块相同的隔板；用m个相同的小球代表取m次；则原问题可以简化为将m个不加区别的小球放进n个格子里面，问有多少种放法；注意到格子的头尾两块隔板无论什么情况下位置都是不变的，故去掉不用考虑。共有C(m, m + n - 1)种。</p>
 </blockquote>
+
+<h1>
+<a name="problem-1198" class="anchor" href="#problem-1198"><span class="octicon octicon-link"></span></a>Problem 1198</h1>
+
+<p>使用并查集求不相交数据集的个数，union 的是二维数组中相邻而且相连的元素。<br>
+union的时候考虑左和上两个方向，同一条线上不用同时考虑两边。</p>
       </section>
 
       <footer>
