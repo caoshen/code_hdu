@@ -302,13 +302,14 @@ union的时候考虑左和上两个方向，同一条线上不用同时考虑两
 <h1>
 <a name="multiply-strings" class="anchor" href="#multiply-strings"><span class="octicon octicon-link"></span></a>Multiply Strings</h1>
 
-<p>模拟大数乘法<br>
-1. string 翻转
-2. 使用data[m + n]的数组保存乘法的中间结果
-3. 处理进位，将结果存入string并返回
-4. 注意两个0相加的情况</p>
+<p>模拟大数乘法  </p>
 
-<pre><code> data[i + j] = (num1[i] - '0') * (num[j] - '0');
+<ol>
+<li>string 翻转</li>
+<li>使用data[m + n]的数组保存乘法的中间结果</li>
+<li>处理进位，将结果存入string并返回</li>
+<li>注意两个0相加的情况</li>
+</ol><pre><code> data[i + j] = (num1[i] - '0') * (num[j] - '0');
 </code></pre>
       </section>
 
