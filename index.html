@@ -346,6 +346,58 @@ union的时候考虑左和上两个方向，同一条线上不用同时考虑两
 
 <p>s(n) = sum(1..n)，求s(1) + s(2) + s(3) + .. + s(n)，用科学表示法<br>
 利用x = pow(10, log10(x))</p>
+
+<h1>
+<a name="unique-binary-search-trees" class="anchor" href="#unique-binary-search-trees"><span class="octicon octicon-link"></span></a>Unique Binary Search Trees</h1>
+
+<p>二叉查找树种类是Catalan数，直接套公式<br>
+f(n) = f(n - 1) * (4n - 2) / (n + 1)</p>
+
+<div class="highlight highlight-cpp"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">int</span> <span class="n">numTrees</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="k">return</span> <span class="nf">numTrees</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+
+<h1>
+<a name="unique-binary-search-trees-ii" class="anchor" href="#unique-binary-search-trees-ii"><span class="octicon octicon-link"></span></a>Unique Binary Search Trees II</h1>
+
+<p>求1..n组成的所有二叉查找树</p>
+
+<p>使用递归，根节点k可以是1..n，它的左子树是1..k-1组成的所有二叉查找树中的<strong>一个</strong>，右子树是k+1..n组成的所有二叉查找树中的<strong>一个</strong></p>
+
+<div class="highlight highlight-cpp"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">TreeNode</span> <span class="o">*&gt;</span> <span class="n">generateTrees</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">generate</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">TreeNode</span> <span class="o">*&gt;</span> <span class="n">generate</span><span class="p">(</span><span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">TreeNode</span><span class="o">*&gt;</span> <span class="n">st</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="o">&gt;</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">st</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">st</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">left</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">vector</span><span class="o">&lt;</span><span class="n">TreeNode</span><span class="o">*&gt;</span> <span class="n">lt</span> <span class="o">=</span> <span class="n">generate</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="n">vector</span><span class="o">&lt;</span><span class="n">TreeNode</span><span class="o">*&gt;</span> <span class="n">rt</span> <span class="o">=</span> <span class="n">generate</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">right</span><span class="p">);</span>
+            <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">j</span> <span class="o">:</span> <span class="n">lt</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">k</span> <span class="o">:</span> <span class="n">rt</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">TreeNode</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+                    <span class="n">node</span> <span class="o">-&gt;</span> <span class="n">left</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+                    <span class="n">node</span> <span class="o">-&gt;</span> <span class="n">right</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>
+                    <span class="n">st</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">st</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
       </section>
 
       <footer>
