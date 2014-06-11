@@ -1,5 +1,7 @@
-##code_hdu
+#code_hdu
 
-solutions to some problems on hduoj
+solutions to some problems on [hduoj][link1], and a [gh-page][link2] for it.
 
-[link](http://acm.hdu.edu.cn/listproblem.php?vol=1)
+[link1]: http://acm.hdu.edu.cn/listproblem.php?vol=1
+
+[link2]: http://caoshen.github.io/code_hdu/
