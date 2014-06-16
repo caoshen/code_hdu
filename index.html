@@ -537,6 +537,45 @@ f(n) = f(n - 1) * (4n - 2) / (n + 1)</p>
     <span class="p">}</span>
 <span class="p">};</span>
 </pre></div>
+
+<h1>
+<a name="count-and-say" class="anchor" href="#count-and-say"><span class="octicon octicon-link"></span></a>Count and Say</h1>
+
+<p>模拟题</p>
+
+<blockquote>
+<p>The count-and-say sequence is the sequence of integers beginning as follows:
+1, 11, 21, 1211, 111221, ...</p>
+
+<p>1 is read off as "one 1" or 11.
+11 is read off as "two 1s" or 21.
+21 is read off as "one 2, then one 1" or 1211.
+Given an integer n, generate the nth sequence.</p>
+
+<p>Note: The sequence of integers will be represented as a string.</p>
+</blockquote>
+
+<p>比如1211，有1个1，1个2,2个1，所以下一个数是111221</p>
+
+<div class="highlight highlight-cpp"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">string</span> <span class="n">countAndSay</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">string</span> <span class="n">s</span><span class="p">(</span><span class="s">"1"</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">(</span><span class="o">--</span><span class="n">n</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">getNext</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">s</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">string</span> <span class="n">getNext</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">stringstream</span> <span class="n">ss</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">s</span><span class="p">.</span><span class="n">end</span><span class="p">();)</span> <span class="p">{</span>
+            <span class="k">auto</span> <span class="n">j</span> <span class="o">=</span> <span class="n">find_if</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">bind1st</span><span class="p">(</span><span class="n">not_equal_to</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(),</span> <span class="o">*</span><span class="n">i</span><span class="p">));</span>
+            <span class="n">ss</span> <span class="o">&lt;&lt;</span> <span class="n">distance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">i</span><span class="p">;</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ss</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
       </section>
 
       <footer>
