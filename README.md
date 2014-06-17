@@ -1,4 +1,4 @@
-#code_hdu
+#codeHdu
 
 solutions to some problems on [hduoj][link1], and a [gh-page][link2] for it.
 
