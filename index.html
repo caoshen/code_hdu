@@ -17,17 +17,17 @@
         $('#main_content').headsmart()
       })
     </script>
-    <title>code_hdu by caoshen</title>
+    <title>codeHdu by caoshen</title>
   </head>
 
   <body>
-    <a id="forkme_banner" href="https://github.com/caoshen/code_hdu">View on GitHub</a>
+    <a id="forkme_banner" href="https://github.com/caoshen/codeHdu">View on GitHub</a>
     <div class="shell">
 
       <header>
         <span class="ribbon-outer">
           <span class="ribbon-inner">
-            <h1>code_hdu</h1>
+            <h1>codeHdu</h1>
             <h2>知行合一</h2>
           </span>
           <span class="left-tail"></span>
@@ -37,7 +37,7 @@
 
       <section id="downloads">
         <span class="inner">
-          <a href="https://github.com/caoshen/code_hdu/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/caoshen/code_hdu/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+          <a href="https://github.com/caoshen/codeHdu/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/caoshen/codeHdu/tarball/master" class="tgz"><em>download</em> .TGZ</a>
         </span>
       </section>
 
@@ -576,12 +576,72 @@ Given an integer n, generate the nth sequence.</p>
     <span class="p">}</span>
 <span class="p">};</span>
 </pre></div>
+
+<h1>
+<a name="3sum" class="anchor" href="#3sum"><span class="octicon octicon-link"></span></a>3Sum</h1>
+
+<blockquote>
+<p>Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.</p>
+
+<p>Note:</p>
+
+<ol>
+<li>Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ≤ b ≤ c)</li>
+<li>The solution set must not contain duplicate triplets.</li>
+</ol>
+</blockquote>
+
+<ol>
+<li>对数组排序</li>
+<li>第一个数从左往右遍历</li>
+<li>第二个数从第一个数的右边开始，第三个数从最后一个数往前，如果三个数之和为0，记录下来</li>
+<li>对于每一个数，如果接下来的数和它相等，就跳过（must not contain duplicate triplets）</li>
+</ol><div class="highlight highlight-cpp"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">threeSum</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">num</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+        <span class="n">sort</span><span class="p">(</span><span class="n">num</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">num</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+        <span class="k">auto</span> <span class="n">last</span> <span class="o">=</span> <span class="n">num</span><span class="p">.</span><span class="n">end</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">a</span> <span class="o">=</span> <span class="n">num</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">a</span> <span class="o">!=</span> <span class="n">prev</span><span class="p">(</span><span class="n">last</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="o">++</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">!=</span> <span class="n">num</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">a</span> <span class="o">==</span> <span class="o">*</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="k">continue</span><span class="p">;</span>
+            <span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="n">next</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+            <span class="k">auto</span> <span class="n">c</span> <span class="o">=</span> <span class="n">prev</span><span class="p">(</span><span class="n">last</span><span class="p">);</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">b</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">!=</span> <span class="n">next</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">b</span> <span class="o">==</span> <span class="o">*</span><span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="o">++</span><span class="n">b</span><span class="p">;</span>
+                    <span class="k">continue</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="o">!=</span> <span class="n">prev</span><span class="p">(</span><span class="n">last</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">c</span> <span class="o">==</span> <span class="o">*</span><span class="p">(</span><span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="o">--</span><span class="n">c</span><span class="p">;</span>
+                    <span class="k">continue</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span> <span class="o">+</span> <span class="o">*</span><span class="n">b</span> <span class="o">+</span> <span class="o">*</span><span class="n">c</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">tmp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="o">*</span><span class="n">c</span><span class="p">});</span>
+                    <span class="o">++</span><span class="n">b</span><span class="p">;</span>
+                    <span class="o">--</span><span class="n">c</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">tmp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="o">++</span><span class="n">b</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                    <span class="o">--</span><span class="n">c</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
       </section>
 
       <footer>
         <span class="ribbon-outer">
           <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/caoshen">caoshen</a> can be found on <a href="https://github.com/caoshen/code_hdu">GitHub</a></p>
+            <p>this project by <a href="https://github.com/caoshen">caoshen</a> can be found on <a href="https://github.com/caoshen/codeHdu">GitHub</a></p>
           </span>
           <span class="left-tail"></span>
           <span class="right-tail"></span>
