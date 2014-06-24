@@ -786,6 +786,58 @@ f("rac", "rab") = f("ra", "rab")</p>
     <span class="p">}</span>
 <span class="p">};</span>
 </pre></div>
+
+<h1>
+<a name="copy-list-with-random-pointer" class="anchor" href="#copy-list-with-random-pointer"><span class="octicon octicon-link"></span></a>Copy List with Random Pointer</h1>
+
+<blockquote>
+<p>A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.</p>
+
+<p>Return a deep copy of the list.</p>
+</blockquote>
+
+<p><strong>深拷贝（deep copy) 与 浅拷贝（shallow copy）</strong></p>
+
+<blockquote>
+<p>浅拷贝就是成员数据之间的一一赋值：把值赋给一一赋给要拷贝的值。但是可能会有这样的情况：对象还包含资源，这里的资源可以值堆资源，或者一个文件。。当值拷贝的时候，两个对象就有用共同的资源，同时对资源可以访问，这样就会出问题。深拷贝就是用来解决这样的问题的，它把资源也赋值一次，使对象拥有不同的资源，但资源的内容是一样的。对于堆资源来说，就是在开辟一片堆内存，把原来的内容拷贝。</p>
+
+<p>如果你拷贝的对象中引用了某个外部的内容（比如分配在堆上的数据），那么在拷贝这个对象的时候，让新旧两个对象指向同一个外部的内容，就是浅拷贝；如果在拷贝这个对象的时候为新对象制作了外部对象的独立拷贝，就是深拷贝</p>
+
+<p>引用和指针的语义是相似的，引用是不可改变的指针，指针是可以改变的引用。其实都是实现了引用语义。
+深拷贝和浅拷贝的区别是在对象状态中包含其它对象的引用的时候，当拷贝一个对象时，如果需要拷贝这个对象引用的对象，则是深拷贝，否则是浅拷贝。</p>
+</blockquote>
+
+<div class="highlight highlight-cpp"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">RandomListNode</span> <span class="o">*</span><span class="n">copyRandomList</span><span class="p">(</span><span class="n">RandomListNode</span> <span class="o">*</span><span class="n">head</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">RandomListNode</span><span class="o">*</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+        <span class="c1">// 在每一个原节点后面添加一个相同的新节点</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">cur</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">RandomListNode</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RandomListNode</span><span class="p">(</span><span class="n">cur</span> <span class="o">-&gt;</span> <span class="n">label</span><span class="p">);</span>
+            <span class="n">node</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">cur</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+            <span class="n">cur</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="n">node</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+        <span class="c1">// 复制原节点的random指向关系</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">cur</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">cur</span> <span class="o">-&gt;</span> <span class="n">random</span><span class="p">)</span>
+                <span class="n">cur</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">-&gt;</span> <span class="n">random</span> <span class="o">=</span> <span class="n">cur</span> <span class="o">-&gt;</span> <span class="n">random</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// 分拆两个单链表</span>
+        <span class="n">RandomListNode</span> <span class="n">dummy</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="o">*</span><span class="n">new_cur</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">dummy</span><span class="p">;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">cur</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">new_cur</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">cur</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+            <span class="n">new_cur</span> <span class="o">=</span> <span class="n">new_cur</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+            <span class="n">cur</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">new_cur</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">dummy</span><span class="p">.</span><span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
       </section>
 
       <footer>
