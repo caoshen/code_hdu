@@ -983,6 +983,92 @@ Output: index1=1, index2=2</p>
     <span class="p">}</span>
 <span class="p">};</span>
 </pre></div>
+
+<h1>
+<a name="scramble-string" class="anchor" href="#scramble-string"><span class="octicon octicon-link"></span></a>Scramble String</h1>
+
+<blockquote>
+<p>Given a string s1, we may represent it as a binary tree by partitioning it to two non-empty substrings recursively.</p>
+
+<p>Below is one possible representation of s1 = "great":</p>
+
+<pre><code>    great
+   /    \
+  gr    eat
+ / \    /  \
+g   r  e   at
+           / \
+          a   t
+</code></pre>
+
+<p>To scramble the string, we may choose any non-leaf node and swap its two children.</p>
+
+<p>For example, if we choose the node "gr" and swap its two children, it produces a scrambled string "rgeat".</p>
+
+<pre><code>    rgeat
+   /    \
+  rg    eat
+ / \    /  \
+r   g  e   at
+           / \
+          a   t
+</code></pre>
+
+<p>We say that "rgeat" is a scrambled string of "great".</p>
+
+<p>Similarly, if we continue to swap the children of nodes "eat" and "at", it produces a scrambled string "rgtae".</p>
+
+<pre><code>    rgtae
+   /    \
+  rg    tae
+ / \    /  \
+r   g  ta  e
+       / \
+      t   a
+</code></pre>
+
+<p>We say that "rgtae" is a scrambled string of "great".</p>
+
+<p>Given two strings s1 and s2 of the same length, determine if s2 is a scrambled string of s1.</p>
+</blockquote>
+
+<p>思路</p>
+
+<p>注意到 <strong>To scramble the string, we may choose any non-leaf node and swap its two children</strong>。</p>
+
+<p>对于s1的分割s11 s12，s2的分割s21 s22，如果有isscramble(s11, s21)&amp;&amp;isscramble(s12,s22)或者isscramble(s11, s22)&amp;&amp;isscramble(s12,s21)，那么有isscramble(s1, s2)。</p>
+
+<p><strong>dp</strong></p>
+
+<div class="highlight highlight-cpp"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">bool</span> <span class="n">isScramble</span><span class="p">(</span><span class="n">string</span> <span class="n">s1</span><span class="p">,</span> <span class="n">string</span> <span class="n">s2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">const</span> <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">N</span> <span class="o">!=</span> <span class="n">s2</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
+            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="c1">// f[n][i][j] 表示长度为n，起点为s1[i] 和起点为 s2[j] 的两个字符串是否互为 scramble</span>
+        <span class="kt">bool</span> <span class="n">f</span><span class="p">[</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span>
+        <span class="n">fill_n</span><span class="p">(</span><span class="o">&amp;</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">N</span> <span class="o">*</span> <span class="n">N</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+                <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">+</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">+</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="k">if</span> <span class="p">((</span><span class="n">f</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">f</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="n">k</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="n">k</span><span class="p">])</span> <span class="o">||</span>
+                            <span class="n">f</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">f</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
+                                <span class="n">f</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                                <span class="k">break</span><span class="p">;</span>
+                            <span class="p">}</span>
+                    <span class="p">}</span>
+        <span class="k">return</span> <span class="n">f</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
+
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
       </section>
 
       <footer>
