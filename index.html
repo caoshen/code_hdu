@@ -1069,6 +1069,64 @@ r   g  ta  e
     <span class="p">}</span>
 <span class="p">};</span>
 </pre></div>
+
+<h1>
+<a name="sort-list" class="anchor" href="#sort-list"><span class="octicon octicon-link"></span></a>Sort List</h1>
+
+<blockquote>
+<p>Sort a linked list in O(n log n) time using constant space complexity.</p>
+</blockquote>
+
+<p>思路</p>
+
+<p>单链表排序用归并排序，双链表排序用快排</p>
+
+<div class="highlight highlight-cpp"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">sortList</span><span class="p">(</span><span class="n">ListNode</span> <span class="o">*</span><span class="n">head</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">head</span> <span class="o">||</span> <span class="o">!</span><span class="n">head</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">head</span><span class="p">;</span>
+        <span class="n">ListNode</span><span class="o">*</span> <span class="n">fast</span><span class="p">,</span> <span class="o">*</span><span class="n">slow</span><span class="p">;</span>
+        <span class="n">fast</span> <span class="o">=</span> <span class="n">slow</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">fast</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">&amp;&amp;</span> <span class="n">fast</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">fast</span> <span class="o">=</span> <span class="n">fast</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+            <span class="n">slow</span> <span class="o">=</span> <span class="n">slow</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// 分成两部分</span>
+        <span class="n">fast</span> <span class="o">=</span> <span class="n">slow</span><span class="p">;</span>
+        <span class="n">slow</span> <span class="o">=</span> <span class="n">slow</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+        <span class="n">fast</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">ListNode</span><span class="o">*</span> <span class="n">head1</span> <span class="o">=</span> <span class="n">sortList</span><span class="p">(</span><span class="n">head</span><span class="p">),</span> <span class="o">*</span><span class="n">head2</span> <span class="o">=</span> <span class="n">sortList</span><span class="p">(</span><span class="n">slow</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nf">mergeTwoLists</span><span class="p">(</span><span class="n">head1</span><span class="p">,</span> <span class="n">head2</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">ListNode</span><span class="o">*</span> <span class="n">mergeTwoLists</span><span class="p">(</span><span class="n">ListNode</span><span class="o">*</span> <span class="n">h1</span><span class="p">,</span> <span class="n">ListNode</span><span class="o">*</span> <span class="n">h2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ListNode</span> <span class="n">dummy</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">dummy</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">h1</span> <span class="o">&amp;&amp;</span> <span class="n">h2</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">h1</span> <span class="o">-&gt;</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="n">h2</span> <span class="o">-&gt;</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">h1</span><span class="p">;</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+                <span class="n">h1</span> <span class="o">=</span> <span class="n">h1</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">h2</span><span class="p">;</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+                <span class="n">h2</span> <span class="o">=</span> <span class="n">h2</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">h1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">h1</span><span class="p">;</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+            <span class="n">h1</span> <span class="o">=</span> <span class="n">h1</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">h2</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">h2</span><span class="p">;</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+            <span class="n">h2</span> <span class="o">=</span> <span class="n">h2</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">dummy</span><span class="p">.</span><span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
       </section>
 
       <footer>
