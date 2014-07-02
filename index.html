@@ -1224,6 +1224,109 @@ Visually, the graph looks like the following:</p>
     <span class="p">}</span>
 <span class="p">};</span>
 </pre></div>
+
+<h1>
+<a name="surrounded-regions" class="anchor" href="#surrounded-regions"><span class="octicon octicon-link"></span></a>Surrounded Regions</h1>
+
+<blockquote>
+<p>Given a 2D board containing 'X' and 'O', capture all regions surrounded by 'X'.</p>
+
+<p>A region is captured by flipping all 'O's into 'X's in that surrounded region.</p>
+
+<p>For example,</p>
+
+<pre><code>X X X X
+X O O X
+X X O X
+X O X X
+</code></pre>
+
+<p>After running your function, the board should be:</p>
+
+<pre><code>X X X X
+X X X X
+X X X X
+X O X X
+</code></pre>
+</blockquote>
+
+<p>思路</p>
+
+<p>如果四条边上有一个 'O' 的“缺口”，那么从它出发搜索到的 'O' 都不会变成 'X'，其他内部的 'O' 变成 'X'。</p>
+
+<p><strong>bfs</strong></p>
+
+<div class="highlight highlight-cpp"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">void</span> <span class="n">solve</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">board</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">board</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">m</span><span class="p">)</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">board</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">bfs</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+            <span class="n">bfs</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">bfs</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="n">bfs</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'O'</span><span class="p">)</span>
+                    <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'X'</span><span class="p">;</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'+'</span><span class="p">)</span>
+                    <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'O'</span><span class="p">;</span>
+                <span class="k">else</span>
+                    <span class="k">continue</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">bfs</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">board</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">typedef</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="kt">state_t</span><span class="p">;</span>
+        <span class="n">queue</span><span class="o">&lt;</span><span class="kt">state_t</span><span class="o">&gt;</span> <span class="n">q</span><span class="p">;</span>
+        <span class="k">const</span> <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">board</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">const</span> <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">board</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">();</span>
+
+        <span class="k">auto</span> <span class="n">isValid</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">]</span> <span class="p">(</span><span class="k">const</span> <span class="kt">state_t</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">const</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+            <span class="k">const</span> <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">m</span> <span class="o">||</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">y</span> <span class="o">&gt;=</span> <span class="n">n</span> <span class="o">||</span> <span class="n">board</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">'O'</span><span class="p">)</span>
+                <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">};</span>
+        <span class="k">auto</span> <span class="n">state_extend</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">]</span> <span class="p">(</span><span class="k">const</span> <span class="kt">state_t</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">vector</span><span class="o">&lt;</span><span class="kt">state_t</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+            <span class="k">const</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+            <span class="k">const</span> <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+            <span class="k">const</span> <span class="kt">state_t</span> <span class="n">new_states</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{{</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">},</span>
+                                        <span class="p">{</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">},</span>
+                                        <span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">},</span>
+                                        <span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}};</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">new_states</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">isValid</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="n">board</span><span class="p">[</span><span class="n">t</span><span class="p">.</span><span class="n">first</span><span class="p">][</span><span class="n">t</span><span class="p">.</span><span class="n">second</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'+'</span><span class="p">;</span>
+                    <span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+        <span class="p">};</span>
+
+        <span class="kt">state_t</span> <span class="n">start</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">};</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">isValid</span><span class="p">(</span><span class="n">start</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'+'</span><span class="p">;</span>
+            <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">start</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">auto</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+            <span class="n">q</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+            <span class="k">auto</span> <span class="n">new_states</span> <span class="o">=</span> <span class="n">state_extend</span><span class="p">(</span><span class="n">cur</span><span class="p">);</span>
+            <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">s</span> <span class="p">:</span> <span class="n">new_states</span><span class="p">)</span>
+                <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
       </section>
 
       <footer>
