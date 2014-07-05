@@ -1485,6 +1485,33 @@ Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).</p>
 Given height = [2,1,5,6,2,3],
 return 10.</p>
 </blockquote>
+
+<p>思路</p>
+
+<p>对于每一个 bar ，求出以它的高度作为宽度的最大矩形，然后取最大值。那么怎么求这个矩形的长度？可以看到，一个 bar 左边第一个比它低的 bar(left_index) 和右边第一个比它低的 bar(right_index) 之间的距离就是长度。所以，可以保存一个递增的栈，栈顶就是当前 bar ，栈顶下面那个就是 left_index ，如果向右扫描到的比当前 bar 低的就是 right_index ，高的就入栈。</p>
+
+<p>因为最后一个 bar 右边没有了，所以要添加一个高度为 0 的 bar 。时间复杂度 O(n) 。</p>
+
+<div class="highlight highlight-cpp"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">largestRectangleArea</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">height</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">stack</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">s</span><span class="p">;</span>
+        <span class="n">height</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">.</span><span class="n">size</span><span class="p">();)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">||</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">height</span><span class="p">[</span><span class="n">s</span><span class="p">.</span><span class="n">top</span><span class="p">()])</span> <span class="p">{</span>
+                <span class="n">s</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">i</span><span class="o">++</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+                <span class="n">s</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">height</span><span class="p">[</span><span class="n">tmp</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">?</span> <span class="nl">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">-</span> <span class="n">s</span><span class="p">.</span><span class="n">top</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
       </section>
 
       <footer>
