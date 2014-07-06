@@ -1512,6 +1512,56 @@ return 10.</p>
     <span class="p">}</span>
 <span class="p">};</span>
 </pre></div>
+
+<h1>
+<a name="palindrome-partitioning-ii" class="anchor" href="#palindrome-partitioning-ii"><span class="octicon octicon-link"></span></a>Palindrome Partitioning II</h1>
+
+<blockquote>
+<p>Given a string s, partition s such that every substring of the partition is a palindrome.</p>
+
+<p>Return the minimum cuts needed for a palindrome partitioning of s.</p>
+
+<p>For example, given s = "aab",
+Return 1 since the palindrome partitioning ["aa","b"] could be produced using 1 cut.</p>
+</blockquote>
+
+<p>思路</p>
+
+<p>这道题要求使原字符串分割后的所有子串都是回文串的最小分割数（最大分割数就是 s.size() - 1 ，分成一个个字符）。</p>
+
+<p>定义状态 f(i, j) 表示区间 [i, j] 之间的最小分割数，那么状态转移方程为</p>
+
+<p>f(i, j) = min { f(i, k) + f(k + 1, j)}, i &lt;= k &lt;= j, 0 &lt;= i &lt;= j &lt; n</p>
+
+<p>可以转化成一维 DP 。注意到，如果 f(i, k) = 1 （比如 k = i ），即从 i 往右扫描， 找到一个回文串，就可以转化成 f(i) 在区间 [i, n - 1] 之间的一维 DP 。</p>
+
+<p>f(i) = min {f(j + 1) + 1 }, i &lt;= j &lt; n</p>
+
+<p>接下来判断 [i, j] 是否是回文串，也是一个 DP 问题。定义 p[i][j] = true 如果 [i, j] 是回文串，那么</p>
+
+<p>p[i][j] = s[i] == s[j] &amp;&amp; p[i + 1][j - 1]</p>
+
+<div class="highlight highlight-cpp"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">minCut</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">f</span><span class="p">[</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="kt">bool</span> <span class="n">p</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="n">n</span><span class="p">];</span>
+        <span class="n">fill_n</span><span class="p">(</span><span class="o">&amp;</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">i</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">||</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]))</span> <span class="p">{</span>
+                    <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                    <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
       </section>
 
       <footer>
